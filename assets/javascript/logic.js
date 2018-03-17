@@ -11,18 +11,10 @@ var config = {
   };
   firebase.initializeApp(config);
 
-// Testing google maps API with ajax
-  // function googleTest() {
-  //   var googleKey = "AIzaSyCysKLNkJpvd4jHgJeSjfKlKfUSS5TvMXg"
-  //   var googleQueryURL = "https://maps.googleapis.com/maps/api/js?key=" + googleKey + "&"
-  
-  //   $.ajax({
-  //     url: GoogleQueryURL,
-  //     method: "GET"
-  //     }).then(function(response) {
-  //     console.log(response);
+var googleKey = "key=AIzaSyCysKLNkJpvd4jHgJeSjfKlKfUSS5TvMXg"
 
-var map, infoWindow;
+
+var map, infoWindow, lat, long;
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: -34.397, lng: 150.644},
@@ -37,14 +29,16 @@ function initMap() {
         lat: position.coords.latitude,
         lng: position.coords.longitude
       };
+      lat = position.coords.latitude;
+      long = position.coords.longitude;
       console.log(position.coords.latitude);
       console.log(position.coords.longitude);
-
-
+      
       infoWindow.setPosition(pos);
       infoWindow.setContent('Location found.');
       infoWindow.open(map);
       map.setCenter(pos);
+      postalCodeGet(lat, long)
     }, function() {
       handleLocationError(true, infoWindow, map.getCenter());
     });
@@ -60,4 +54,18 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
                         'Error: The Geolocation service failed.' :
                         'Error: Your browser doesn\'t support geolocation.');
   infoWindow.open(map);
-}
+} 
+
+function postalCodeGet(lat, long) {
+  var googleURL = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + long + "&" + googleKey
+  $.ajax({
+    url: googleURL,
+    method: "GET"
+    }).then(function(response) {
+    console.log(response);
+    });
+  };
+
+// Reverse Search Format
+// https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=AIzaSyCysKLNkJpvd4jHgJeSjfKlKfUSS5TvMXg
+
