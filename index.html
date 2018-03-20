@@ -14,22 +14,42 @@
 </head>
 
 <body>
+
     <div class="container">
+
+
         <div class="row">
             <div class="col">
+
                 <form>
-                    <input type="text" class="textBox">
-                    <button class="test btn btn-danger btn-lg">TEST</button>
+
+                    <label for="what">Search</label> 
+                    <input type="text" id="what" class="textBox">
+                    <br>
+
+                    <button class="test btn btn-success btn-md">Go</button>
+
                 </form>
+
             </div>
         </div>
+
+
+        <div class="row">
+            <div class="col" id="card-div">
+
+            </div>
+        </div>
+
+
     </div>
 
 <!-- JAVASCRIPT -->
     <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>  
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script> 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="http://api.eventful.com/js/api"></script>    
+    <script src="http://api.eventful.com/js/api"></script>    
     <script src="assets/javascript/logic.js"></script> 
 
 
