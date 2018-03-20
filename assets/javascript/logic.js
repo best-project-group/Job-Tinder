@@ -36,25 +36,23 @@ function pullEvent() {
 
             console.log(event[i]);
 
-            $("#event").append(event[i].title);
-            $("#description").append(event[i].description);
-            $("#venue").append(event[i].venue_name);
-            $("#external-link").attr("href", event[i].url);
-
-
-
             function pullDate() {
-
      
-                startTime = moment(new Date(event[i].start_time)).format("LLLL");
+                startTime = moment(new Date(event[i].start_time));
                 timeToDoors = moment().to(startTime)
+                formattedStart = moment(startTime).format("LLLL");
 
-                $("#description").append(startTime + "<br>" + timeToDoors)
-
+                $("#description").append(formattedStart + "<br>" + timeToDoors)
 
             }
 
+            $("#event").append(event[i].title);
+            $("#venue").append(event[i].venue_name);
+            $("#description").append(event[i].description);
             pullDate();
+            $("#external-link").attr("href", event[i].url);
+
+
         }
 
     });
