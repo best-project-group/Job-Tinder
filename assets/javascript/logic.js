@@ -1,4 +1,4 @@
- 
+/* REMOVES ANY EXISTING CARD AND CREATES BLANK HTML TEMPLATE */ 
 function createCard() {
 
     $("#card-div").empty();
@@ -15,9 +15,12 @@ function createCard() {
     )
 
 }
-    
+
+
+/* RETRIEVES REQUESTED EVENT INFO AND FILLS THE BLANK CARD*/
 function pullEvent() {
 
+    /* DEFINES THE PARAMETERS TO CHECK AGAINST THE API */
     var eventObject = {
         app_key: "wTFBTHnT7b7cPP6n" ,
         q: $("#what").val(),
@@ -28,14 +31,18 @@ function pullEvent() {
         sort_order: "popularity",
     };
 
-    EVDB.API.call("/events/search", eventObject, function(oData) {
+    /* SEARCHES THE API USING EVENTOBJECT */
+    EVDB.API.call("/events/search", eventObject, function(objectData) {
 
-        event = oData.events.event;
+        /* SIMPLIFIES LATER ENTRIES */
+        event = objectData.events.event;
 
+        /* LOOPS THROUGH THE RETRIEVED EVENT LIST */
         for (i = 0; i < event.length; i++) {
 
             console.log(event[i]);
 
+            /* FORMATS THE UGLY DATE GIVEN BY THE API AND APPENDS TO THE CARD */
             function pullDate() {
      
                 startTime = moment(new Date(event[i].start_time));
@@ -46,22 +53,17 @@ function pullEvent() {
 
             }
 
+            /* APPENDS OTHER INFORMATION TO CARD AND ATTACHES THE LINK TO THE BUTTON */
             $("#event").append(event[i].title);
             $("#venue").append(event[i].venue_name);
             $("#description").append(event[i].description);
             pullDate();
             $("#external-link").attr("href", event[i].url);
 
-
         }
 
     });
 }
-
-
-
-
-
 
 
 $(document).ready(function() {
@@ -70,11 +72,7 @@ $(document).ready(function() {
         event.preventDefault();
         createCard();
         pullEvent();
-
-    
-
     })
-
 
 })
 
