@@ -1,0 +1,13 @@
+select{
+	height: 40px;
+}
+body{
+	background-color: #eeeeee;
+}
+h1,
+h2{
+	margin-left: 100px;
+}
+.jumbotron{
+background-color: #5D6D7E
+}
