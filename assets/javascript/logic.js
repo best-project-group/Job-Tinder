@@ -1,6 +1,5 @@
 // GOOGLE MAPS API KEY: AIzaSyCysKLNkJpvd4jHgJeSjfKlKfUSS5TvMXg
 
-
 var config = {
     apiKey: "AIzaSyBsTvIy8q6B5Jc6Dc_fbGY9PYX_vRtz4a0",
     authDomain: "job-tinder-167a5.firebaseapp.com",
@@ -12,7 +11,6 @@ var config = {
   firebase.initializeApp(config);
 
 var googleKey = "key=AIzaSyCysKLNkJpvd4jHgJeSjfKlKfUSS5TvMXg"
-
 
 var map, infoWindow, lat, long;
 function initMap() {
@@ -31,8 +29,8 @@ function initMap() {
       };
       lat = position.coords.latitude;
       long = position.coords.longitude;
-      console.log(position.coords.latitude);
-      console.log(position.coords.longitude);
+      // console.log(position.coords.latitude);
+      // console.log(position.coords.longitude);
       
       infoWindow.setPosition(pos);
       infoWindow.setContent('Location found.');
@@ -62,7 +60,9 @@ function postalCodeGet(lat, long) {
     url: googleURL,
     method: "GET"
     }).then(function(response) {
-    console.log(response);
+      console.log(response);
+    var postalCode = response.results[0].address_components[6].long_name;
+    // console.log(postalCode);
     });
   };
 
