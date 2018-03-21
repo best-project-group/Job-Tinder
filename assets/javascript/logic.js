@@ -1,10 +1,8 @@
-<<<<<<< HEAD
 $("#submit-btn").click(function() {
     $('html, body').animate({
         scrollTop: $("#top-of-form").offset().top
     }, 5000);
 });
-=======
 // GOOGLE MAPS API KEY: AIzaSyCysKLNkJpvd4jHgJeSjfKlKfUSS5TvMXg
 
 var config = {
@@ -76,4 +74,3 @@ function postalCodeGet(lat, long) {
 // Reverse Search Format
 // https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=AIzaSyCysKLNkJpvd4jHgJeSjfKlKfUSS5TvMXg
 
->>>>>>> 5caec686a0bed9e1ca9234bd4ff6fcfd41a167c1
