@@ -1,15 +1,4 @@
-<<<<<<< HEAD
 // initalize firebase
-=======
-<<<<<<< HEAD
-$("#submit-btn").click(function() {
-    $('html, body').animate({
-        scrollTop: $("#top-of-form").offset().top
-    }, 5000);
-});
-=======
-// GOOGLE MAPS API KEY: AIzaSyCysKLNkJpvd4jHgJeSjfKlKfUSS5TvMXg
->>>>>>> 7a12535c3c556ecb0166c5e866d1a988e3c1d80d
 
   var config = {
       apiKey: "AIzaSyBsTvIy8q6B5Jc6Dc_fbGY9PYX_vRtz4a0",
@@ -42,14 +31,13 @@ function initMap() {
       };
       lat = position.coords.latitude;
       long = position.coords.longitude;
-      // console.log(position.coords.latitude);
-      // console.log(position.coords.longitude);
+      console.log(position.coords.latitude);
+      console.log(position.coords.longitude);
       
       infoWindow.setPosition(pos);
       infoWindow.setContent('Location found.');
       infoWindow.open(map);
       map.setCenter(pos);
-      postalCodeGet(lat, long)
     }, function() {
       handleLocationError(true, infoWindow, map.getCenter());
     });
@@ -65,38 +53,39 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
                         'Error: The Geolocation service failed.' :
                         'Error: Your browser doesn\'t support geolocation.');
   infoWindow.open(map);
-} 
-
-function postalCodeGet(lat, long) {
-  var googleURL = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + long + "&" + googleKey
-  $.ajax({
-    url: googleURL,
-    method: "GET"
-    }).then(function(response) {
-      console.log("Google Response:");
-      console.log(response);
-    var postalCode = response.results[0].address_components[6].long_name;
-    // console.log(postalCode);
-    });
-  };
+}
 
 // Call the eventful API
 
 var eventfulKey = "app_key=d4dVMRcZjgzdC4mP";
-var eventfulURL = "https://api.eventful.com/rest/events/search?" + eventfulKey + "&location=44134"
+var eventfulURL = "https://api.eventful.com/json/events/search?" + eventfulKey + "&location=44134"
+getEvent().then(function(foundEvent) {
+ 
+//   // JQuery to go here!! 
 
-$.ajax({
-  url: eventfulURL,
-  method: "GET"
-  }).then(function(eventfulResponse) {
-    console.log("Eventful Response:");
-    console.log(eventfulResponse);
-  })
+  console.log(foundEvent)
+})
 
-axios.get(eventfulURL)
+function getEvent() {  
+return axios.get(eventfulURL)
   .then(function(axiosResponse) {
-    console.log(axiosResponse)
+    console.log(axiosResponse.data.events.event)
+    var eventArray = []
+     axiosResponse.data.events.event.forEach(function(singleEvent) { 
+      var event= {
+        venueAddress: singleEvent.venue_address,
+        venueName: singleEvent.venue_name,
+        venueURL: singleEvent.venue_url,
+        eventURL: singleEvent.url,
+        eventCity: singleEvent.city_name,
+        eventDescripition: singleEvent.descripition,
+        startTime: singleEvent.start_time,
+        stopTime: singleEvent.stop_time,
+        eventTitle: singleEvent.title,
+      }
+      
+    eventArray.push(event) 
+     })
+  return(eventArray)
   })
-
-
->>>>>>> 5caec686a0bed9e1ca9234bd4ff6fcfd41a167c1
+}
