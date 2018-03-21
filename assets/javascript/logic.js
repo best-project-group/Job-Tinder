@@ -1,14 +1,16 @@
-// GOOGLE MAPS API KEY: AIzaSyCysKLNkJpvd4jHgJeSjfKlKfUSS5TvMXg
+// initalize firebase
 
-var config = {
-    apiKey: "AIzaSyBsTvIy8q6B5Jc6Dc_fbGY9PYX_vRtz4a0",
-    authDomain: "job-tinder-167a5.firebaseapp.com",
-    databaseURL: "https://job-tinder-167a5.firebaseio.com",
-    projectId: "job-tinder-167a5",
-    storageBucket: "job-tinder-167a5.appspot.com",
-    messagingSenderId: "66660247629"
-  };
-  firebase.initializeApp(config);
+  var config = {
+      apiKey: "AIzaSyBsTvIy8q6B5Jc6Dc_fbGY9PYX_vRtz4a0",
+      authDomain: "job-tinder-167a5.firebaseapp.com",
+      databaseURL: "https://job-tinder-167a5.firebaseio.com",
+      projectId: "job-tinder-167a5",
+      storageBucket: "job-tinder-167a5.appspot.com",
+      messagingSenderId: "66660247629"
+    };
+    firebase.initializeApp(config);
+
+// call google maps API    
 
 var googleKey = "key=AIzaSyCysKLNkJpvd4jHgJeSjfKlKfUSS5TvMXg"
 
@@ -60,12 +62,29 @@ function postalCodeGet(lat, long) {
     url: googleURL,
     method: "GET"
     }).then(function(response) {
+      console.log("Google Response:");
       console.log(response);
     var postalCode = response.results[0].address_components[6].long_name;
     // console.log(postalCode);
     });
   };
 
-// Reverse Search Format
-// https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=AIzaSyCysKLNkJpvd4jHgJeSjfKlKfUSS5TvMXg
+// Call the eventful API
+
+var eventfulKey = "app_key=d4dVMRcZjgzdC4mP";
+var eventfulURL = "https://api.eventful.com/rest/events/search?" + eventfulKey + "&location=44134"
+
+$.ajax({
+  url: eventfulURL,
+  method: "GET"
+  }).then(function(eventfulResponse) {
+    console.log("Eventful Response:");
+    console.log(eventfulResponse);
+  })
+
+axios.get(eventfulURL)
+  .then(function(axiosResponse) {
+    console.log(axiosResponse)
+  })
+
 
