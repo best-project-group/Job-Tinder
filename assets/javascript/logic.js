@@ -60,7 +60,6 @@ function pullEvent() {
         pullDate();
         $("#external-link").attr("href", event[i].url);
 
-        console.log(eventObject.q)
         searchId = eventObject.q;
     });
 }
@@ -72,15 +71,12 @@ $(document).ready(function() {
 
     i = 0;
 
-
     $(".test").on("click", function(event) {
         event.preventDefault();
         createCard();
         pullEvent();
-        console.log(searchId)
-        console.log($("#what").val())
 
-
+        /* IF THE SEARCH TERM IS NEW, START CYCLE AT 0, ELSE ITERATE */
         if($("#what").val() === searchId) {
           i++;
         }
