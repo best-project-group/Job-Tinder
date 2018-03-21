@@ -20,12 +20,58 @@
 
     <div id="map"></div>
    
+
+	<div class="container">
+		<div class="jumbotron">
+			<h1>Event Tinder</h1>
+			<h2>Easier Event Search</h2>	
+		</div>
+
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-4" id="top-of-form">
+				<form>
+              		<div class="form-group"><h3> General Information</h3>
+                		<label for="name">Event Category</label>
+                		<br>
+                		<select name="category" style="width: 100%">
+						    <option value="BB">Basketball</option>
+						    <option value="Con">Concerts</option>
+						    <option value="TH">Theater</option>
+						</select>	
+              		</div>
+              		<div class="form-group">
+                		<label for="code">Zip Code</label>
+                		<input class="form-control" id="zip-code" type="text">
+              		</div>
+              		<div class="form-group">
+                		<label for="dia">Within How Many Miles</label>
+                		<br>
+                		<select name="miles" style="width: 100%">
+						    <option value="20">20 miles</option>
+						    <option value="50">50 miles</option>
+						    <option value="100">100 miles</option>
+						</select>
+<!--                 		<input class="form-control" id="diameter" type="number">
+ -->              	</div>		
+              		<div class="form-group">
+                		<label for="field">Search Term</label>
+                		<input class="form-control" id="search-term" type="text">
+              		</div>			         		
+<!--             >
+ -->     			<br>
+              		<button class="btn btn-primary" id="submit-btn" type="submit">Submit</button>
+					
+		        </form>
+		      </div>
+		</div>
+	</div>
+	
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCysKLNkJpvd4jHgJeSjfKlKfUSS5TvMXg&callback=initMap">
     </script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script type="text/javascript" src="assets/javascript/logic.js"></script>    
-
-
+	
 </body>
 </html>

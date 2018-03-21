@@ -1,4 +1,15 @@
+<<<<<<< HEAD
 // initalize firebase
+=======
+<<<<<<< HEAD
+$("#submit-btn").click(function() {
+    $('html, body').animate({
+        scrollTop: $("#top-of-form").offset().top
+    }, 5000);
+});
+=======
+// GOOGLE MAPS API KEY: AIzaSyCysKLNkJpvd4jHgJeSjfKlKfUSS5TvMXg
+>>>>>>> 7a12535c3c556ecb0166c5e866d1a988e3c1d80d
 
   var config = {
       apiKey: "AIzaSyBsTvIy8q6B5Jc6Dc_fbGY9PYX_vRtz4a0",
@@ -88,3 +99,4 @@ axios.get(eventfulURL)
   })
 
 
+>>>>>>> 5caec686a0bed9e1ca9234bd4ff6fcfd41a167c1
