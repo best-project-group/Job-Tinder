@@ -28,7 +28,6 @@ function pullEvent() {
         where: "cleveland",
         date: "2013061000-2019062000",
         include: "tags,categories",
-        page_size: 3,
         sort_order: "popularity",
     };
 
