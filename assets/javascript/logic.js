@@ -17,6 +17,7 @@ function createCard() {
 }
 
 
+
 /* RETRIEVES REQUESTED EVENT INFO AND FILLS THE BLANK CARD*/
 function pullEvent() {
 
@@ -27,7 +28,7 @@ function pullEvent() {
         where: "cleveland",
         date: "2013061000-2019062000",
         include: "tags,categories",
-        page_size: 1,
+        page_size: 3,
         sort_order: "popularity",
     };
 
@@ -38,40 +39,55 @@ function pullEvent() {
         event = objectData.events.event;
 
         /* LOOPS THROUGH THE RETRIEVED EVENT LIST */
-        for (i = 0; i < event.length; i++) {
+          
+        console.log(event[i]);
 
-            console.log(event[i]);
+        /* FORMATS THE UGLY DATE GIVEN BY THE API AND APPENDS TO THE CARD */
+        function pullDate() {
+  
+            startTime = moment(new Date(event[i].start_time));
+            timeToDoors = moment().to(startTime)
+            formattedStart = moment(startTime).format("LLLL");
 
-            /* FORMATS THE UGLY DATE GIVEN BY THE API AND APPENDS TO THE CARD */
-            function pullDate() {
-     
-                startTime = moment(new Date(event[i].start_time));
-                timeToDoors = moment().to(startTime)
-                formattedStart = moment(startTime).format("LLLL");
-
-                $("#description").append(formattedStart + "<br>" + timeToDoors)
-
-            }
-
-            /* APPENDS OTHER INFORMATION TO CARD AND ATTACHES THE LINK TO THE BUTTON */
-            $("#event").append(event[i].title);
-            $("#venue").append(event[i].venue_name);
-            $("#description").append(event[i].description);
-            pullDate();
-            $("#external-link").attr("href", event[i].url);
+            $("#description").append(formattedStart + "<br>" + timeToDoors)
 
         }
 
+        /* APPENDS OTHER INFORMATION TO CARD AND ATTACHES THE LINK TO THE BUTTON */
+        $("#event").append(event[i].title);
+        $("#venue").append(event[i].venue_name);
+        $("#description").append(event[i].description);
+        pullDate();
+        $("#external-link").attr("href", event[i].url);
+
+        console.log(eventObject.q)
+        searchId = eventObject.q;
     });
 }
 
 
 $(document).ready(function() {
     
+    searchId = "";
+
+    i = 0;
+
+
     $(".test").on("click", function(event) {
         event.preventDefault();
         createCard();
         pullEvent();
+        console.log(searchId)
+        console.log($("#what").val())
+
+
+        if($("#what").val() === searchId) {
+          i++;
+        }
+        else {
+          i = 0;
+        }
+        
     })
 
 })
