@@ -1,59 +1,91 @@
+<!-- GOOGLE MAPS API KEY: AIzaSyCysKLNkJpvd4jHgJeSjfKlKfUSS5TvMXg -->
 <!DOCTYPE html>
-<html lang="en-us">
+<html>
 
 <head>
-
-<meta charset="UTF-8">
-<title>Job Tinder</title>
-
-
-<!-- CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-
-</head>
+    <title>Job Tinder</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">    
+     <!-- Bootstrap -->
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+     <!-- JQuery -->
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+     <!-- Firebase Reference -->
+	 <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
+	 <!-- External CSS -->
+     <link rel="stylesheet" href="assets/css/style.css">
+    
+    </head>
 
 <body>
 
-    <div class="container">
+    <div id="map"></div>
+   
 
+	<div class="container">
+		<div class="jumbotron">
+			<h1>Event Tinder</h1>
+			<h2>Easier Event Search</h2>	
+		</div>
 
-        <div class="row">
-            <div class="col">
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-4" id="top-of-form">
+				<form>
+              		<div class="form-group"><h3> General Information</h3>
+                		<label for="name">Event Category</label>
+                		<br>
+                		<select name="category" style="width: 100%">
+						    <option value="BB">Basketball</option>
+						    <option value="Con">Concerts</option>
+						    <option value="TH">Theater</option>
+						</select>	
+              		</div>
+              		<div class="form-group">
+                		<label for="code">Zip Code</label>
+                		<input class="form-control" id="zip-code" type="text">
+              		</div>
+              		<div class="form-group">
+                		<label for="dia">Within How Many Miles</label>
+                		<br>
+                		<select name="miles" style="width: 100%">
+						    <option value="20">20 miles</option>
+						    <option value="50">50 miles</option>
+						    <option value="100">100 miles</option>
+						</select>
+					</div>		
 
-                <form>
+              		<div class="form-group">
+                		<label for="field">Search Term</label>
+                		<input class="form-control" id="search-term" type="text">
+              		</div>			         		
 
-                    <label for="what">Search</label> 
-                    <input type="text" id="what" class="textBox">
-                    <br>
+					<br>
+              		<button class="btn btn-primary" id="submit-btn" type="submit">Submit</button>
+					
+		        </form>
+			</div>
 
-                    <button class="test btn btn-success btn-md">Go</button>
-
-                </form>
-
-            </div>
-        </div>
-
-
-        <div class="row">
-            <div class="col" id="card-div">
-
-            </div>
-        </div>
-
-
-    </div>
-
-<!-- JAVASCRIPT -->
-    <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
-    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script> 
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="http://api.eventful.com/js/api"></script>    
-    <script src="assets/javascript/logic.js"></script> 
-
-
+			<div class="col">
+				<div class="row">
+					<div class="col" id="card-div">
+		
+					</div>
+				</div>
+				<div class="row">
+					<div class="col" id="map-div">
+		
+					</div>
+				</div>
+			</div>  
+			
+		</div>
+	</div>
+	
+	<script src="http://api.eventful.com/js/api"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCysKLNkJpvd4jHgJeSjfKlKfUSS5TvMXg&callback=initMap"></script>
+	<script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script> 
+    <script type="text/javascript" src="assets/javascript/logic.js"></script>    
+	
 </body>
-
-
 </html>
