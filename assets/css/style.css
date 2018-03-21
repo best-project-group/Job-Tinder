@@ -1,3 +1,18 @@
+<<<<<<< HEAD
+select{
+	height: 40px;
+}
+body{
+	background-color: #eeeeee;
+}
+h1,
+h2{
+	margin-left: 100px;
+}
+.jumbotron{
+background-color: #5D6D7E
+}
+=======
 /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
        #map {
@@ -9,3 +24,4 @@
         margin: 0;
         padding: 0;
       }
+>>>>>>> 5caec686a0bed9e1ca9234bd4ff6fcfd41a167c1
