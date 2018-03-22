@@ -1,24 +1,51 @@
-select{
+select,
+#date1,
+#date2,
+#zip-code,
+#search-term{
 	height: 40px;
 }
-body{
-	background-color: #eeeeee;
+#start{
+  padding-left: 0px;
+  margin-bottom: 10px;  
 }
+#end{
+  padding-right: 0px;
+  margin-bottom: 10px;
+}
+#date{
+  margin-bottom: 5px;
+}
+
+/*body{
+	background-color: #eeeeee;
+}*/
 h1,
 h2{
-	margin-left: 100px;
+	margin-left: 35px;
+}
+p{
+  color: red;
 }
 .jumbotron{
-background-color: #5D6D7E
+  background-color: #dba34a;
+  padding: 10px;
+  border-style: solid;
+  border-color: #2e6da4;
+}
+#submit-btn{
+  background-color: #dba34a;
+  color: black;
+  width: 100px;
 }
 /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
-       #map {
-        height: 100%;
-      }
+#map{
+    height: 100%;
+}
       /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
