@@ -7,13 +7,13 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">    
      <!-- Bootstrap -->
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
      <!-- JQuery -->
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
      <!-- Firebase Reference -->
-     <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
+	 <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
+	 <!-- External CSS -->
      <link rel="stylesheet" href="assets/css/style.css">
-    
     </head>
 
 <body>
@@ -52,24 +52,39 @@
 						    <option value="50">50 miles</option>
 						    <option value="100">100 miles</option>
 						</select>
-<!--                 		<input class="form-control" id="diameter" type="number">
- -->              	</div>		
+
+					</div>		
+
               		<div class="form-group">
                 		<label for="field">Search Term</label>
                 		<input class="form-control" id="search-term" type="text">
               		</div>			         		
-<!--             >
- -->     			<br>
+
+					<br>
               		<button class="btn btn-primary" id="submit-btn" type="submit">Submit</button>
 					
 		        </form>
-		      </div>
+			</div>
+
+			<div class="col">
+				<div class="row">
+					<div class="col" id="card-div">
+		
+					</div>
+				</div>
+				<div class="row">
+					<div class="col" id="map-div">
+		
+					</div>
+				</div>
+			</div>  
+			
 		</div>
 	</div>
 	
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCysKLNkJpvd4jHgJeSjfKlKfUSS5TvMXg&callback=initMap">
-    </script>
+	<script src="http://api.eventful.com/js/api"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCysKLNkJpvd4jHgJeSjfKlKfUSS5TvMXg&callback=initMap"></script>
+	<script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script> 
     <script type="text/javascript" src="assets/javascript/logic.js"></script>    
 	
 </body>
