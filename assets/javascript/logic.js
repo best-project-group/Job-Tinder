@@ -1,14 +1,16 @@
-// GOOGLE MAPS API KEY: AIzaSyCysKLNkJpvd4jHgJeSjfKlKfUSS5TvMXg
+// initalize firebase
 
-var config = {
-    apiKey: "AIzaSyBsTvIy8q6B5Jc6Dc_fbGY9PYX_vRtz4a0",
-    authDomain: "job-tinder-167a5.firebaseapp.com",
-    databaseURL: "https://job-tinder-167a5.firebaseio.com",
-    projectId: "job-tinder-167a5",
-    storageBucket: "job-tinder-167a5.appspot.com",
-    messagingSenderId: "66660247629"
-  };
-  firebase.initializeApp(config);
+  var config = {
+      apiKey: "AIzaSyBsTvIy8q6B5Jc6Dc_fbGY9PYX_vRtz4a0",
+      authDomain: "job-tinder-167a5.firebaseapp.com",
+      databaseURL: "https://job-tinder-167a5.firebaseio.com",
+      projectId: "job-tinder-167a5",
+      storageBucket: "job-tinder-167a5.appspot.com",
+      messagingSenderId: "66660247629"
+    };
+    firebase.initializeApp(config);
+
+// call google maps API    
 
 var googleKey = "key=AIzaSyCysKLNkJpvd4jHgJeSjfKlKfUSS5TvMXg"
 
@@ -29,14 +31,16 @@ function initMap() {
       };
       lat = position.coords.latitude;
       long = position.coords.longitude;
-      // console.log(position.coords.latitude);
-      // console.log(position.coords.longitude);
+      console.log("Lat and Long from google maps API:");
+      console.log(position.coords.latitude);
+      console.log(position.coords.longitude);
+      console.log("------------------------------------")
       
       infoWindow.setPosition(pos);
       infoWindow.setContent('Location found.');
       infoWindow.open(map);
       map.setCenter(pos);
-      postalCodeGet(lat, long)
+      getEvent();
     }, function() {
       handleLocationError(true, infoWindow, map.getCenter());
     });
@@ -52,22 +56,50 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
                         'Error: The Geolocation service failed.' :
                         'Error: Your browser doesn\'t support geolocation.');
   infoWindow.open(map);
-} 
+}
 
-function postalCodeGet(lat, long) {
-  var googleURL = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + long + "&" + googleKey
-  $.ajax({
-    url: googleURL,
-    method: "GET"
-    }).then(function(response) {
-      console.log(response);
-    var postalCode = response.results[0].address_components[6].long_name;
-    // console.log(postalCode);
-    });
-  };
+// Call the eventful API
 
-// Reverse Search Format
-// https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=AIzaSyCysKLNkJpvd4jHgJeSjfKlKfUSS5TvMXg
+var radius = 10
+var eventfulKey = "app_key=d4dVMRcZjgzdC4mP";
+var eventfulURL = "https://api.eventful.com/json/events/search?" + eventfulKey + "&location=" + lat + "," + long + "&within=" + radius
+// var eventfulURL = "https://api.eventful.com/json/events/search?" + eventfulKey + "&location=44134"
+
+getEvent().then(function(foundEvent) {
+ 
+  // JQuery to go here!! 
+
+  // console.log(foundEvent)
+})
+
+function getEvent() {
+return axios.get(eventfulURL)
+  .then(function(axiosResponse) {
+    // console.log(axiosResponse)
+    console.log("Lat, Long, eventfulURL from within Axios call:")
+    console.log(lat);
+    console.log(long);
+    console.log(eventfulURL)
+    console.log("------------------------------------")
+    var eventArray = []
+     axiosResponse.data.events.event.forEach(function(singleEvent) { 
+      var event= {
+        venueAddress: singleEvent.venue_address,
+        venueName: singleEvent.venue_name,
+        venueURL: singleEvent.venue_url,
+        eventURL: singleEvent.url,
+        eventCity: singleEvent.city_name,
+        eventDescripition: singleEvent.descripition,
+        startTime: singleEvent.start_time,
+        stopTime: singleEvent.stop_time,
+        eventTitle: singleEvent.title,
+      }
+      
+    eventArray.push(event) 
+     })
+  return(eventArray)
+  })
+}
 
 /* REMOVES ANY EXISTING CARD AND CREATES BLANK HTML TEMPLATE */ 
 function createCard() {
