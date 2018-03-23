@@ -1,16 +1,14 @@
-// initalize firebase
+// GOOGLE MAPS API KEY: AIzaSyCysKLNkJpvd4jHgJeSjfKlKfUSS5TvMXg
 
-  var config = {
-      apiKey: "AIzaSyBsTvIy8q6B5Jc6Dc_fbGY9PYX_vRtz4a0",
-      authDomain: "job-tinder-167a5.firebaseapp.com",
-      databaseURL: "https://job-tinder-167a5.firebaseio.com",
-      projectId: "job-tinder-167a5",
-      storageBucket: "job-tinder-167a5.appspot.com",
-      messagingSenderId: "66660247629"
-    };
-    firebase.initializeApp(config);
-
-// call google maps API    
+var config = {
+    apiKey: "AIzaSyBsTvIy8q6B5Jc6Dc_fbGY9PYX_vRtz4a0",
+    authDomain: "job-tinder-167a5.firebaseapp.com",
+    databaseURL: "https://job-tinder-167a5.firebaseio.com",
+    projectId: "job-tinder-167a5",
+    storageBucket: "job-tinder-167a5.appspot.com",
+    messagingSenderId: "66660247629"
+  };
+  firebase.initializeApp(config);
 
 var googleKey = "key=AIzaSyCysKLNkJpvd4jHgJeSjfKlKfUSS5TvMXg"
 
@@ -170,13 +168,12 @@ $(document).ready(function() {
   searchId = "";
 
   i = 0;
-
-  $("#submit-btn").click(function(event) {
-      $('html, body').animate({
-          scrollTop: $("#top-of-form").offset().top
-      }, 5000);
-
-      event.preventDefault();
+$("#submit-btn").on("click", function() {
+  event.preventDefault();
+    $('html, body').animate({
+        scrollTop: $("#top-of-form").offset().top
+    }, 5000);
+     event.preventDefault();
       createCard();
       pullEvent();
 
@@ -187,13 +184,37 @@ $(document).ready(function() {
       else {
         i = 0;
       }
-  });
 
+  var zipCode = $("#zip-code").val().trim();
+  console.log("zip code: " +zipCode);
+  var count = 0;
+  for (var i = 0; i < zipCode.length; i++) {
+    count++
+  }
+  console.log(count);
+  if (count !== 5) {
+    var messg = $("<p>");
+   
+    messg.text("Please enter a 5-digit number"),
+    $("#zip").append(messg);
+  }
+  else{
+    messg.text();
+  }
+  var today =new Date();
+  var inputDate1 = new Date($('#date1').val());
+  var inputDate2 = new Date($('#date2').val());
+  console.log("first date:  " + inputDate1);
+  var dateMessg = $("<p>");
+  if ((inputDate1.value == " ")||(inputDate2.value =="")){ 
+    dateMessg.text("Please select a valid date");
+    $("#date").append(dateMessg);
+  } 
+  else if ((inputDate1 < today) || (inputDate2 < today)) {
+    dateMessg.text("Please start with today's date or a future date");
+    $("#date").append(dateMessg);
+  }
+});
 });
 
-$("#submit-btn").click(function() {
-    $('html, body').animate({
-        scrollTop: $("#top-of-form").offset().top
-    }, 5000);
-});
 
