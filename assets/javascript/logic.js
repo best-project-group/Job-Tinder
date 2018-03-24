@@ -32,7 +32,7 @@ function initMap() {
       infoWindow.setContent('Location found.');
       infoWindow.open(map);
       map.setCenter(pos);
-      getEvent(pos.lat, pos.lng);
+      getEventLatLong(pos.lat, pos.lng);
     }, function () {
       handleLocationError(true, infoWindow, map.getCenter());
     });
@@ -50,19 +50,18 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
   infoWindow.open(map);
 }
 
-function testEvent(lat, long) {
-}
-
 // Call the eventful API
-
-var radius = 10
 var eventfulKey = "app_key=d4dVMRcZjgzdC4mP";
-var eventfulURL = "https://api.eventful.com/json/events/search?" + eventfulKey + "&location=" + lat + "," + long + "&within=" + radius
 
-function getEvent(lat, long) {
-  return axios.get("https://api.eventful.com/json/events/search?" + eventfulKey + "&location=" + lat + "," + long + "&within=" + radius)
+function getEventByZip() {
+  var zipCode = $("#zip-code").val();
+  console.log(zipCode);
+  var zeventfulURL = "https://api.eventful.com/json/events/search?" + eventfulKey + "&location=" + zipCode + "&within=" + radius
+
+  return axios.get(zeventfulURL)
     .then(function (axiosResponse) {
       var eventArray = []
+      console.log(axiosResponse);
       axiosResponse.data.events.event.forEach(function (singleEvent) {
         var event = {
           venueAddress: singleEvent.venue_address,
@@ -71,7 +70,38 @@ function getEvent(lat, long) {
           eventURL: singleEvent.url,
           eventCity: singleEvent.city_name,
           eventDescripition: singleEvent.descripition,
-          // startTime: singleEvent.start_time,
+          startTime: singleEvent.start_time,
+          stopTime: singleEvent.stop_time,
+          eventTitle: singleEvent.title,
+        }
+        eventArray.push(event)
+      })
+      console.log(eventArray)
+      return (eventArray)
+    })
+};
+
+
+function getEventLatLong(lat, long) {
+
+  var radius = $("#radius option:selected").val();
+  console.log(radius);
+
+  var eventfulURL = "https://api.eventful.com/json/events/search?" + eventfulKey + "&location=" + lat + "," + long + "&within=" + radius
+
+  return axios.get(eventfulURL)
+    .then(function (axiosResponse) {
+      var eventArray = []
+      console.log(axiosResponse);
+      axiosResponse.data.events.event.forEach(function (singleEvent) {
+        var event = {
+          venueAddress: singleEvent.venue_address,
+          venueName: singleEvent.venue_name,
+          venueURL: singleEvent.venue_url,
+          eventURL: singleEvent.url,
+          eventCity: singleEvent.city_name,
+          eventDescripition: singleEvent.descripition,
+          startTime: singleEvent.start_time,
           stopTime: singleEvent.stop_time,
           eventTitle: singleEvent.title,
         }
@@ -97,6 +127,7 @@ function createCard() {
     "</div>" +
     "</div>"
   )
+
 
 }
 
@@ -148,41 +179,42 @@ function createCard() {
 
 $(document).ready(function () {
 
-  searchId = "";
+});
 
-  i = 0;
-  $("#submit-btn").on("click", function () {
-    event.preventDefault();
-    $('html, body').animate({
-      scrollTop: $("#top-of-form").offset().top
-    }, 5000);
-    event.preventDefault();
-    createCard();
-    pullEvent();
+searchId = "";
 
-    /* IF THE SEARCH TERM IS NEW, START CYCLE AT 0, ELSE ITERATE */
-    if ($("#search-term").val() === searchId) {
-      i++;
-    }
-    else {
-      i = 0;
-    }
+i = 0;
+$("#submit-btn").on("click", function (event) {
+  event.preventDefault();
+  $('html, body').animate({
+    scrollTop: $("#top-of-form").offset().top
+  }, 5000);
+  event.preventDefault();
+  createCard();
+  getEventByZip();
 
-    var zipCode = $("#zip-code").val().trim();
-    console.log("zip code: " + zipCode);
+  /* IF THE SEARCH TERM IS NEW, START CYCLE AT 0, ELSE ITERATE */
+  if ($("#search-term").val() === searchId) {
+    i++;
+  }
+  else {
+    i = 0;
+  }
 
-    var today = new Date();
-    var inputDate1 = new Date($('#date1').val());
-    var inputDate2 = new Date($('#date2').val());
-    console.log("first date:  " + inputDate1);
-    var dateMessg = $("<p>");
-    if ((inputDate1.value == " ") || (inputDate2.value == "")) {
-      dateMessg.text("Please select a valid date");
-      $("#date").append(dateMessg);
-    }
-    else if ((inputDate1 < today) || (inputDate2 < today)) {
-      dateMessg.text("Please start with today's date or a future date");
-      $("#date").append(dateMessg);
-    }
-  });
+  var zipCode = $("#zip-code").val().trim();
+  console.log("zip code: " + zipCode);
+
+  var today = new Date();
+  var inputDate1 = new Date($('#date1').val());
+  var inputDate2 = new Date($('#date2').val());
+  console.log("first date:  " + inputDate1);
+  var dateMessg = $("<p>");
+  if ((inputDate1.value == " ") || (inputDate2.value == "")) {
+    dateMessg.text("Please select a valid date");
+    $("#date").append(dateMessg);
+  }
+  else if ((inputDate1 < today) || (inputDate2 < today)) {
+    dateMessg.text("Please start with today's date or a future date");
+    $("#date").append(dateMessg);
+  }
 });
