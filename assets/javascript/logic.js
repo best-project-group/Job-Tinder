@@ -76,14 +76,6 @@ var eventfulURL = "https://api.eventful.com/json/events/search?" + eventfulKey +
 function getEvent(lat, long) {
   return axios.get("https://api.eventful.com/json/events/search?" + eventfulKey + "&location=" + lat + "," + long + "&within=" + radius)
     .then(function (axiosResponse) {
-      // console.log(axiosResponse)
-      // console.log("Lat, Long, eventfulURL from within Axios call:")
-      // console.log(lat);
-      // console.log(long);
-      // console.log(eventfulURL)
-      // console.log("https://api.eventful.com/json/events/search?" + eventfulKey + "&location=" + lat + "," + long + "&within=" + radius)
-      // console.log("------------------------------------")
-      // console.log(axiosResponse)
       var eventArray = []
       axiosResponse.data.events.event.forEach(function (singleEvent) {
         var event = {
@@ -97,9 +89,9 @@ function getEvent(lat, long) {
           stopTime: singleEvent.stop_time,
           eventTitle: singleEvent.title,
         }
-        console.log(eventArray)
         eventArray.push(event)
       })
+      console.log(eventArray);
       return (eventArray)
     })
 }
