@@ -1,3 +1,5 @@
+/* KEVIN'S COPY */
+
 select{
 	height: 40px;
 }
@@ -11,14 +13,14 @@ h2{
 .jumbotron{
 background-color: #5D6D7E
 }
-/* Always set the map height explicitly to define the size of the div
+/* /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
-       #map {
+       /* #map {
         height: 100%;
-      }
+      } */
       /* Optional: Makes the sample page fill the window. */
-      html, body {
+      /* html, body {
         height: 100%;
         margin: 0;
         padding: 0;
-      }
+      } */ */

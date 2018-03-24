@@ -1,3 +1,5 @@
+// KEVIN'S COPY
+
 // initalize firebase
 
   var config = {
@@ -40,8 +42,8 @@ function initMap() {
       infoWindow.setContent('Location found.');
       infoWindow.open(map);
       map.setCenter(pos);
-      getEvent();
-    }, function() {
+      getEvent(pos.lat, pos.lng);
+       }, function() {
       handleLocationError(true, infoWindow, map.getCenter());
     });
   } else {
@@ -58,6 +60,11 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
   infoWindow.open(map);
 }
 
+function testEvent(lat, long) {
+console.log(lat);
+console.log(long);
+}
+
 // Call the eventful API
 
 var radius = 10
@@ -72,14 +79,15 @@ getEvent().then(function(foundEvent) {
   // console.log(foundEvent)
 })
 
-function getEvent() {
-return axios.get(eventfulURL)
+function getEvent(lat, long) {
+return axios.get("https://api.eventful.com/json/events/search?" + eventfulKey + "&location=" + lat + "," + long + "&within=" + radius)
   .then(function(axiosResponse) {
     // console.log(axiosResponse)
     console.log("Lat, Long, eventfulURL from within Axios call:")
     console.log(lat);
     console.log(long);
-    console.log(eventfulURL)
+    // console.log(eventfulURL)
+    // console.log("https://api.eventful.com/json/events/search?" + eventfulKey + "&location=" + lat + "," + long + "&within=" + radius)
     console.log("------------------------------------")
     var eventArray = []
      axiosResponse.data.events.event.forEach(function(singleEvent) { 
@@ -196,4 +204,3 @@ $("#submit-btn").click(function() {
         scrollTop: $("#top-of-form").offset().top
     }, 5000);
 });
-
