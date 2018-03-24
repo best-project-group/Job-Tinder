@@ -1,37 +1,39 @@
-<!-- GOOGLE MAPS API KEY: AIzaSyCysKLNkJpvd4jHgJeSjfKlKfUSS5TvMXg -->
 <!DOCTYPE html>
 <html>
 
 <head>
-    <title>Event Tinder</title>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">    
-     <!-- Bootstrap -->
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-     <!-- JQuery -->
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-     <!-- Firebase Reference -->
-     <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
-     <link rel="stylesheet" href="assets/css/style.css">    
+	<title>Event Tinder</title>
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+	<meta charset="utf-8">
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<!--JQuery-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<!-- Firebase Reference -->
+	<script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
+	<!--CSS-->
+	<link rel="stylesheet" href="assets/css/style.css">
 </head>
+
 <body>
 	<div class="container">
 		<div class="jumbotron">
 			<h1>Event Tinder</h1>
-			<h2>Fun Event Search</h2>	
+			<h2>Fun Event Search</h2>
 		</div>
 
 		<div class="row">
 			<!-- <div class="col-md-1"></div> -->
 			<div class="col" id="top-of-form">
 				<form>
-          <div class="form-group"><h3> Tell Us What You're Looking For</h3>
-            <label for="name">Event Category</label>
-            <br>
-              <select name="category" style="width: 100%">
-                <option value="select">Select a Category</option>
-						    <option value="concerts">Concerts</option>
-						    <option value="conferences">Conferences</option>
+					<div class="form-group">
+						<h3> Tell Us What You're Looking For</h3>
+						<label for="name">Event Category</label>
+						<br>
+						<select name="category" style="width: 100%">
+							<option value="select">Select a Category</option>
+							<option value="concerts">Concerts</option>
+							<option value="conferences">Conferences</option>
 							<option value="comedy">Comedy</option>
 							<option value="education">Education</option>
 							<option value="family">Family</option>
@@ -59,77 +61,82 @@
 							<option value="sports">Sports</option>
 							<option value="technology">Technology</option>
 							<option value="other">Other</option>
-						    
-						  </select>
-              <br>
-              <br>	
-          <!-- </div> -->
-              <div class="form-group" id="date">
-                <label for="date">When?</label>
-              </div>
-              <div class="row no-gutters">
-              <div class="col pr-1" id="start">
-                <div class="form-group" id="start-date">
-                  <label for="date1">between</label>
-                  <input class="form-control" id="date1" type="date">
-                </div>
-              </div>
-              <div class="col pl-1" id="end">
-                <div class="form-group" id="end-date">       
-                  <label for="date2">and</label>
-                  <input class="form-control" id="date2" type="date">
-                </div>
-              </div>
-              </div> 
-            
-              <div class="form-group" id="zip">
-                <label for="code">Enter Your 5-digit Zip Code</label>
-                <input class="form-control" id="zip-code" type="text" pattern="[0-9]{5}">
-              </div>
-              <div class="form-group">
-                	<label for="dia">Within How Many Miles</label>
-                	<br>
-                	<select name="miles" style="width: 100%">
-                    <option value="dia">Select Diameter</option>
-    						    <option value="10">10 miles</option>
-    						    <option value="20">20 miles</option>
-    						    <option value="30">30 miles</option>
-						      </select>
-              </div>		
-              <div class="form-group">
-                	<label for="field">Search Term</label>
-                	<input class="form-control" id="search-term" type="text">
-              </div>			         		
-          </div>
-           			<br>
-              	<button class="btn btn-primary" id="submit-btn" type="submit">Submit</button>		
 
-		        </form>
+						</select>
+						<br>
+						<br>
+						<!-- </div> -->
+						<div class="form-group" id="date">
+							<label for="date">When?</label>
+						</div>
+						<div class="row no-gutters">
+							<div class="col pr-1" id="start">
+								<div class="form-group" id="start-date">
+									<label for="date1">between</label>
+									<input class="form-control" id="date1" type="date">
+								</div>
+							</div>
+							<div class="col pl-1" id="end">
+								<div class="form-group" id="end-date">
+									<label for="date2">and</label>
+									<input class="form-control" id="date2" type="date">
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group" id="zip">
+							<label for="code">Enter Your 5-digit Zip Code</label>
+							<input class="form-control" id="zip-code" type="text" pattern="[0-9]{5}">
+						</div>
+						<div class="form-group">
+							<label for="dia">Within How Many Miles</label>
+							<br>
+							<select name="miles" style="width: 100%">
+								<option value="dia">Select Diameter</option>
+								<option value="10">10 miles</option>
+								<option value="20">20 miles</option>
+								<option value="30">30 miles</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="field">Search Term</label>
+							<input class="form-control" id="search-term" type="text">
+						</div>
+					</div>
+					<br>
+					<button class="btn btn-primary" id="submit-btn" type="submit">Submit</button>
+
+				</form>
 			</div>
 
 			<div class="col">
 				<div class="row">
 					<div class="col" id="card-div">
-		
+
 					</div>
 				</div>
 				<div class="row">
 					<div class="col" id="map-div">
-		
+
 					</div>
 				</div>
-			</div>  
-			
+			</div>
+
 		</div>
 	</div>
-  <div id="map"></div>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCysKLNkJpvd4jHgJeSjfKlKfUSS5TvMXg&callback=initMap">
-    </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	 <script src="http://api.eventful.com/js/api"></script>
-	<script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script> 
-    <script type="text/javascript" src="assets/javascript/logic.js"></script>    
+	<div id="map"></div>
+	<script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+	<!--Google maps API -->
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCysKLNkJpvd4jHgJeSjfKlKfUSS5TvMXg&callback=initMap">
+	</script>
+	<!--Evenful API -->
+	<script src="http://api.eventful.com/js/api"></script>
+<!--Axios-->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<!--logic.js-->
+	<script type="text/javascript" src="assets/javascript/logic.js"></script>
+	
 	
 </body>
+
 </html>
