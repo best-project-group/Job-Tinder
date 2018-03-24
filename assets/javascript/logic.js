@@ -32,7 +32,6 @@ function initMap() {
       infoWindow.setContent('Location found.');
       infoWindow.open(map);
       map.setCenter(pos);
-      getEvent(pos.lat, pos.lng);
        }, function() {
       handleLocationError(true, infoWindow, map.getCenter());
     });
@@ -50,19 +49,22 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
   infoWindow.open(map);
 }
 
-function testEvent(lat, long) {
-}
 
 // Call the eventful API
 
-var radius = 10
-var eventfulKey = "app_key=d4dVMRcZjgzdC4mP";
-var eventfulURL = "https://api.eventful.com/json/events/search?" + eventfulKey + "&location=" + lat + "," + long + "&within=" + radius
 
-function getEvent(lat, long) {
-return axios.get("https://api.eventful.com/json/events/search?" + eventfulKey + "&location=" + lat + "," + long + "&within=" + radius)
+
+function getEvent() {
+
+var searchTerm = $("#search-term").val().trim();
+var radius = 10;
+var eventfulKey = "app_key=d4dVMRcZjgzdC4mP";
+var eventfulURL = "https://api.eventful.com/json/events/search?" + eventfulKey + "&location=" + lat + "," + long + "&within=" + radius + "&q=" + searchTerm;
+
+return axios.get(eventfulURL)
   .then(function(axiosResponse) {
     var eventArray = []
+    console.log(axiosResponse);
      axiosResponse.data.events.event.forEach(function(singleEvent) { 
       var event= {
         venueAddress: singleEvent.venue_address,
@@ -71,14 +73,28 @@ return axios.get("https://api.eventful.com/json/events/search?" + eventfulKey + 
         eventURL: singleEvent.url,
         eventCity: singleEvent.city_name,
         eventDescripition: singleEvent.descripition,
-        // startTime: singleEvent.start_time,
+        startTime: singleEvent.start_time,
         stopTime: singleEvent.stop_time,
         eventTitle: singleEvent.title,
       }
     eventArray.push(event) 
      })
-     console.log(eventArray)
-  return(eventArray)
+     console.log(eventArray[0].eventTitle)
+      $("#event").append(eventArray[0].eventTitle);
+      $("#venue").append(eventArray[0].venueName);
+      $("#description").append(eventArray[0].eventDescripition);
+      $("#external-link").attr("href", eventArray[0].eventURL);
+    console.log(eventArray[0].eventURL) 
+     
+    return(eventArray)
+
+//       /* APPENDS OTHER INFORMATION TO CARD AND ATTACHES THE LINK TO THE BUTTON */
+       
+
+
+       /* searchId = singleEvent.q; */
+
+
   })
 }
 
@@ -146,19 +162,19 @@ function createCard() {
 // }
 
 
-$(document).ready(function() {
+
 
   searchId = "";
 
   i = 0;
-$("#submit-btn").on("click", function() {
+$("#submit-btn").on("click", function(event) {
   event.preventDefault();
     $('html, body').animate({
         scrollTop: $("#top-of-form").offset().top
     }, 5000);
-     event.preventDefault();
+    
       createCard();
-      pullEvent();
+      getEvent();
 
       /* IF THE SEARCH TERM IS NEW, START CYCLE AT 0, ELSE ITERATE */
       if($("#search-term").val() === searchId) {
@@ -185,4 +201,4 @@ $("#submit-btn").on("click", function() {
     $("#date").append(dateMessg);
   }
 });
-});
+
