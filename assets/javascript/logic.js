@@ -187,20 +187,7 @@ $("#submit-btn").on("click", function() {
 
   var zipCode = $("#zip-code").val().trim();
   console.log("zip code: " +zipCode);
-  var count = 0;
-  for (var i = 0; i < zipCode.length; i++) {
-    count++
-  }
-  console.log(count);
-  if (count !== 5) {
-    var messg = $("<p>");
-   
-    messg.text("Please enter a 5-digit number"),
-    $("#zip").append(messg);
-  }
-  else{
-    messg.text();
-  }
+
   var today =new Date();
   var inputDate1 = new Date($('#date1').val());
   var inputDate2 = new Date($('#date2').val());
