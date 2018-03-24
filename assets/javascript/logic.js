@@ -76,6 +76,7 @@ return axios.get(eventfulURL)
         startTime: singleEvent.start_time,
         stopTime: singleEvent.stop_time,
         eventTitle: singleEvent.title,
+        eventID: singleEvent.id
       }
     eventArray.push(event) 
      })
@@ -84,6 +85,21 @@ return axios.get(eventfulURL)
       $("#venue").append(eventArray[0].venueName);
       $("#description").append(eventArray[0].eventDescripition);
       $("#external-link").attr("href", eventArray[0].eventURL);
+
+
+       function pullDate() {
+
+           startTime = moment(new Date(eventArray[0].startTime));
+           timeToDoors = moment().to(startTime)
+           formattedStart = moment(startTime).format("LLLL");
+
+           $("#description").append(formattedStart + "<br>" + timeToDoors)
+
+       }
+      pullDate();
+
+      searchId = eventID;
+
     console.log(eventArray[0].eventURL) 
      
     return(eventArray)
@@ -92,7 +108,7 @@ return axios.get(eventfulURL)
        
 
 
-       /* searchId = singleEvent.q; */
+         
 
 
   })
