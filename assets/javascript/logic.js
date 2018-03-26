@@ -53,7 +53,34 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
   infoWindow.open(map);
 }
 
-function testEvent(lat, long) {}
+function getEventByZip() {
+  var zipCode = $("#zip-code").val();
+  console.log(zipCode);
+  var zeventfulURL = "https://api.eventful.com/json/events/search?" + eventfulKey + "&location=" + zipCode + "&within=" + radius
+
+  return axios.get(zeventfulURL)
+    .then(function (axiosResponse) {
+      var eventArray = []
+      console.log(axiosResponse);
+      axiosResponse.data.events.event.forEach(function (singleEvent) {
+        var event = {
+          venueAddress: singleEvent.venue_address,
+          venueName: singleEvent.venue_name,
+          venueURL: singleEvent.venue_url,
+          eventURL: singleEvent.url,
+          eventCity: singleEvent.city_name,
+          eventDescripition: singleEvent.descripition,
+          startTime: singleEvent.start_time,
+          stopTime: singleEvent.stop_time,
+          eventTitle: singleEvent.title,
+        }
+        eventArray.push(event)
+      })
+      console.log(eventArray);
+      return (eventArray)
+    })
+};
+
 
 function dateCheck(inputDate1, inputDate2) {
   var today = moment().format("YYYYMMDD");
@@ -97,7 +124,7 @@ function getEvent(lat, long) {
     var latLong = zipCode
   else var latLong = lat + "," + long
   dateCheck(firstDate, secondDate);
-  var URL = "https://api.eventful.com/json/events/search?" + eventfulKey + "&within=" + radius + "&location=" + latLong + "&keywords=" searchTerm + "&date=" + firstDate + "00-" + secondDate + "00"
+  var URL = "https://api.eventful.com/json/events/search?" + eventfulKey + "&within=" + radius + "&location=" + latLong + "&keywords=" + searchTerm + "&date=" + firstDate + "00-" + secondDate + "00"
   return axios.get(URL)
     .then(function (axiosResponse) {
       console.log(URL)
