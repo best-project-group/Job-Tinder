@@ -2,6 +2,7 @@ select,
 #date1,
 #date2,
 #zip-code,
+<<<<<<< HEAD
 #search-term{
     height: 40px;
 }
@@ -44,10 +45,71 @@ p{
 }
       /* Optional: Makes the sample page fill the window. */
 html, body {
+=======
+#search-term {
+  height: 40px;
+  border-color: #146bb8;
+  border-width: 2px;
+}
+
+#start {
+  padding-left: 0px;
+  margin-bottom: 10px;
+}
+
+#end {
+  padding-right: 0px;
+  margin-bottom: 10px;
+}
+
+#date-label,
+#date {
+  margin-bottom: 0px;
+}
+
+h2 {
+  color: azure;
+  padding-top: 5px;
+  text-align: center;
+  font-size: 30px;
+}
+
+h1 {
+  font-size: 48px;
+  color: azure;
+  padding-top: 30px;
+  font-family: 'Berkshire Swash', cursive;
+  text-align: center;
+}
+
+p {
+  color: red;
+}
+
+#submit-btn {
+  background-color: #146bb8;
+  width: 100px;
+  color: azure;
+  border-color: #146bb8;
+}
+
+/* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+
+#map {
+  height: 100%;
+}
+
+/* Optional: Makes the sample page fill the window. */
+
+html,
+body {
+>>>>>>> d6b9e2a3929eff1dd10df94d7b228d414db88576
   height: 100%;
   margin: 0;
   padding: 0;
 }
+<<<<<<< HEAD
 /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
        #map {
@@ -59,3 +121,39 @@ html, body {
         margin: 0;
         padding: 0;
       }
+=======
+
+/* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+
+#map {
+  height: 100%;
+}
+
+/* Optional: Makes the sample page fill the window. */
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+h4 {
+  margin-top: 50px;
+}
+
+#title {
+  background-color: #146bb8;
+  padding: 20px;
+}
+
+img {
+  opacity: 0.6;
+}
+
+#external-link {
+  background-color: #146bb8;
+  color: azure;
+}
+>>>>>>> d6b9e2a3929eff1dd10df94d7b228d414db88576
