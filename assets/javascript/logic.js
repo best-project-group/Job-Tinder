@@ -11,52 +11,67 @@ firebase.initializeApp(config);
 var googleKey = "key=AIzaSyCysKLNkJpvd4jHgJeSjfKlKfUSS5TvMXg"
 
 var map, infoWindow, lat, long;
-function initMap() {
-map = new google.maps.Map(document.getElementById('map'), {
-  center: {lat: -34.397, lng: 150.644},
-  zoom: 6
-});
-infoWindow = new google.maps.InfoWindow;
 
-// Try HTML5 geolocation.
-if (navigator.geolocation) {
-  navigator.geolocation.getCurrentPosition(function(position) {
-    var pos = {
-      lat: position.coords.latitude,
-      lng: position.coords.longitude
-    };
-    lat = position.coords.latitude;
-    long = position.coords.longitude;
-    // console.log("Lat and Long from google maps API:");
-    // console.log(position.coords.latitude);
-    // console.log(position.coords.longitude);
-    // console.log("------------------------------------")
-    
-    infoWindow.setPosition(pos);
-    infoWindow.setContent('Location found.');
-    infoWindow.open(map);
-    map.setCenter(pos);
-    getEvent(pos.lat, pos.lng);
-     }, function() {
-    handleLocationError(true, infoWindow, map.getCenter());
+function initMap() {
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: {
+      lat: -34.397,
+      lng: 150.644
+    },
+    zoom: 6
   });
-} else {
-  // Browser doesn't support Geolocation
-  handleLocationError(false, infoWindow, map.getCenter());
-}
+  infoWindow = new google.maps.InfoWindow;
+
+  // Try HTML5 geolocation.
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      var pos = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+      lat = position.coords.latitude;
+      long = position.coords.longitude;
+
+      infoWindow.setPosition(pos);
+      infoWindow.setContent('Location found.');
+      infoWindow.open(map);
+      map.setCenter(pos);
+    }, function () {
+      handleLocationError(true, infoWindow, map.getCenter());
+    });
+  } else {
+    // Browser doesn't support Geolocation
+    handleLocationError(false, infoWindow, map.getCenter());
+  }
 }
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-infoWindow.setPosition(pos);
-infoWindow.setContent(browserHasGeolocation ?
-                      'Error: The Geolocation service failed.' :
-                      'Error: Your browser doesn\'t support geolocation.');
-infoWindow.open(map);
+  infoWindow.setPosition(pos);
+  infoWindow.setContent(browserHasGeolocation ?
+    'Error: The Geolocation service failed.' :
+    'Error: Your browser doesn\'t support geolocation.');
+  infoWindow.open(map);
 }
 
-function testEvent(lat, long) {
-// console.log(lat);
-// console.log(long);
+function testEvent(lat, long) {}
+
+function dateCheck(inputDate1, inputDate2) {
+  var today = moment().format("YYYYMMDD");
+  // var inputDate1 = $('#date1').val();
+  // var inputDate2 = $('#date2').val();
+  // console.log("today: " + today);
+  console.log("first date:  " + inputDate1);
+  console.log("second date:  " + inputDate2);
+  console.log(today);
+
+  var dateMessg = $("<p>");
+  if ((inputDate1.value == " ") || (inputDate2.value == "")) {
+    dateMessg.text("Please select a valid date");
+    $("#date").append(dateMessg);
+  } else if ((inputDate1 < today) || (inputDate2 < today)) {
+    dateMessg.text("Please start with today's date or a future date");
+    $("#date").append(dateMessg);
+  }
 }
 
 // Call the eventful API
@@ -64,67 +79,63 @@ function testEvent(lat, long) {
 // var radius = 10
 var eventfulKey = "app_key=d4dVMRcZjgzdC4mP";
 var eventfulURL = "https://api.eventful.com/json/events/search?" + eventfulKey + "&location=" + lat + "," + long + "&within=" + radius
-// var eventfulURL = "https://api.eventful.com/json/events/search?" + eventfulKey + "&location=44134"
 
 // getEvent().then(function(foundEvent) {
 
 // JQuery to go here!! 
 
-// console.log(foundEvent)
 // })
 var radius, zipCode, searchTerm, firstDate, secondDate;
+
 function getEvent(lat, long) {
-radius = $("#rad").val().trim();
-zipCode = $("#zip-code").val().trim();
-searchTerm = $("#search-term").val().trim();
-FirstDate = moment($("#date1").val().trim()).format();
-secondDate = moment($("#date2").val().trim()).format();
-console.log("first Date:  " + firstDate)
-return axios.get("https://api.eventful.com/json/events/search?" + eventfulKey + "&location=" + lat + "," + long + "&within=" + radius + "&location=" + zipCode + "&date=" + (firstDate-secondDate) + "&keywors=" + searchTerm)
-.then(function(axiosResponse) {
-  // console.log(axiosResponse)
-  // console.log("Lat, Long, eventfulURL from within Axios call:")
-  // console.log(lat);
-  // console.log(long);
-  // console.log(eventfulURL)
-  // console.log("https://api.eventful.com/json/events/search?" + eventfulKey + "&location=" + lat + "," + long + "&within=" + radius)
-  // console.log("------------------------------------")
-  // console.log(axiosResponse)
-  var eventArray = []
-   axiosResponse.data.events.event.forEach(function(singleEvent) { 
-    var event= {
-      venueAddress: singleEvent.venue_address,
-      venueName: singleEvent.venue_name,
-      venueURL: singleEvent.venue_url,
-      eventURL: singleEvent.url,
-      eventCity: singleEvent.city_name,
-      eventDescripition: singleEvent.descripition,
-      // startTime: singleEvent.start_time,
-      stopTime: singleEvent.stop_time,
-      eventTitle: singleEvent.title,
-    }
-    console.log(eventArray)
-  eventArray.push(event) 
-   })
-return(eventArray)
-})
+  radius = $("#rad").val().trim();
+  zipCode = $("#zip-code").val().trim();
+  searchTerm = $("#search-term").val().trim();
+  firstDate = moment($("#date1").val().trim()).format("YYYYMMDD");
+  secondDate = moment($("#date2").val().trim()).format("YYYYMMDD");
+  if (zipCode.length === 5)
+    var latLong = zipCode
+  else var latLong = lat + "," + long
+  dateCheck(firstDate, secondDate);
+  var URL = "https://api.eventful.com/json/events/search?" + eventfulKey + "&within=" + radius + "&location=" + latLong + "&keywords=" searchTerm + "&date=" + firstDate + "00-" + secondDate + "00"
+  return axios.get(URL)
+    .then(function (axiosResponse) {
+      console.log(URL)
+      var eventArray = []
+      axiosResponse.data.events.event.forEach(function (singleEvent) {
+        var event = {
+          venueAddress: singleEvent.venue_address,
+          venueName: singleEvent.venue_name,
+          venueURL: singleEvent.venue_url,
+          eventURL: singleEvent.url,
+          eventCity: singleEvent.city_name,
+          eventDescripition: singleEvent.descripition,
+          startTime: singleEvent.start_time,
+          stopTime: singleEvent.stop_time,
+          eventTitle: singleEvent.title,
+        }
+        eventArray.push(event)
+      })
+      console.log(eventArray)
+      return (eventArray)
+    })
 }
 
-/* REMOVES ANY EXISTING CARD AND CREATES BLANK HTML TEMPLATE */ 
+/* REMOVES ANY EXISTING CARD AND CREATES BLANK HTML TEMPLATE */
 function createCard() {
 
-$("#card-div").empty();
+  $("#card-div").empty();
 
-$("#card-div").html(
-"<div class='card'>" +
+  $("#card-div").html(
+    "<div class='card'>" +
     "<h5 class='card-header' id='event'></h5>" +
     "<div class='card-body'>" +
-        "<h5 class='card-title' id='venue'></h5>" +
-        "<p class='card-text' id='description'></p>" +
-        "<a href='#' class='btn btn-primary' id='external-link'>" + "Find Out More" + "</a>" +
+    "<h5 class='card-title' id='venue'></h5>" +
+    "<p class='card-text' id='description'></p>" +
+    "<a href='#' class='btn btn-primary' id='external-link'>" + "Find Out More" + "</a>" +
     "</div>" +
-"</div>"
-)
+    "</div>"
+  )
 
 }
 
@@ -144,14 +155,14 @@ $("#card-div").html(
 /* SEARCHES THE API USING EVENTOBJECT */
 // EVDB.API.call("/events/search", eventObject, function(objectData) {
 
-    /* SIMPLIFIES LATER ENTRIES */
-    // event = objectData.events.event;
+/* SIMPLIFIES LATER ENTRIES */
+// event = objectData.events.event;
 
-    /* LOOPS THROUGH THE RETRIEVED EVENT LIST */
-      
-    // console.log(event[i]);
+/* LOOPS THROUGH THE RETRIEVED EVENT LIST */
 
-    /* FORMATS THE UGLY DATE GIVEN BY THE API AND APPENDS TO THE CARD */
+// console.log(event[i]);
+
+/* FORMATS THE UGLY DATE GIVEN BY THE API AND APPENDS TO THE CARD */
 //       function pullDate() {
 
 //           startTime = moment(new Date(event[i].start_time));
@@ -173,47 +184,30 @@ $("#card-div").html(
 //   });
 // }
 
+$(document).ready(function () {
+  searchId = "";
 
-$(document).ready(function() {
-searchId = "";
-
-i = 0;
-$("#submit-btn").on("click", function() {
-event.preventDefault();
-  $('html, body').animate({
+  i = 0;
+  $("#submit-btn").on("click", function () {
+    event.preventDefault();
+    $('html, body').animate({
       scrollTop: $("#top-of-form").offset().top
-  }, 5000);
-   event.preventDefault();
+    }, 5000);
+    event.preventDefault();
+    getEvent(lat, long)
     createCard();
     // pullEvent();
 
     /* IF THE SEARCH TERM IS NEW, START CYCLE AT 0, ELSE ITERATE */
-    if($("#search-term").val() === searchId) {
+    if ($("#search-term").val() === searchId) {
       i++;
-    }
-    else {
+    } else {
       i = 0;
     }
 
-var zipCode = $("#zip-code").val().trim();
-console.log("zip code: " +zipCode);
+    var zipCode = $("#zip-code").val().trim();
+    console.log("zip code: " + zipCode);
 
-function dateCheck() {
-    var today = new Date();
-    var inputDate1 = new Date($('#date1').val());
-    var inputDate2 = new Date($('#date2').val());
-    console.log(today);
-    console.log("first date:  " + inputDate1);
-    var dateMessg = $("<p>");
-    if ((inputDate1.value == " ") || (inputDate2.value == "")) {
-      dateMessg.text("Please select a valid date");
-      $("#date").append(dateMessg);
-    }
-    else if ((inputDate1 < today) || (inputDate2 < today)) {
-      dateMessg.text("Please start with today's date or a future date");
-      $("#date").append(dateMessg);
-    }
-  }
-  dateCheck();
-});
+
+  });
 });

@@ -2,53 +2,64 @@ select,
 #date1,
 #date2,
 #zip-code,
-#search-term{
+#search-term {
   height: 40px;
   border-color: #146bb8;
   border-width: 2px;
 }
-#start{
+
+#start {
   padding-left: 0px;
-  margin-bottom: 10px; 
+  margin-bottom: 10px;
 }
-#end{
+
+#end {
   padding-right: 0px;
   margin-bottom: 10px;
 }
+
 #date-label,
-#date{
-  margin-bottom: 0px; 
+#date {
+  margin-bottom: 0px;
 }
-h2{
+
+h2 {
   color: azure;
   padding-top: 5px;
   text-align: center;
   font-size: 30px;
 }
-h1{
+
+h1 {
   font-size: 48px;
   color: azure;
   padding-top: 30px;
   font-family: 'Berkshire Swash', cursive;
   text-align: center;
 }
-p{
+
+p {
   color: red;
 }
 
-#submit-btn{
+#submit-btn {
   background-color: #146bb8;
   width: 100px;
   color: azure;
   border-color: #146bb8;
 }
+
 /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
-#map{
+
+#map {
   height: 100%;
 }
-      /* Optional: Makes the sample page fill the window. */
-html, body {
+
+/* Optional: Makes the sample page fill the window. */
+
+html,
+body {
   height: 100%;
   margin: 0;
   padding: 0;
@@ -56,26 +67,34 @@ html, body {
 
 /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
+
 #map {
   height: 100%;
 }
-      /* Optional: Makes the sample page fill the window. */
-html, body {
+
+/* Optional: Makes the sample page fill the window. */
+
+html,
+body {
   height: 100%;
   margin: 0;
   padding: 0;
 }
-h4{
+
+h4 {
   margin-top: 50px;
 }
-#title{
+
+#title {
   background-color: #146bb8;
   padding: 20px;
 }
-img{
+
+img {
   opacity: 0.6;
 }
-#external-link{
+
+#external-link {
   background-color: #146bb8;
   color: azure;
 }
