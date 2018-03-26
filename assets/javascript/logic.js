@@ -20,6 +20,7 @@ function initMap() {
   });
   infoWindow = new google.maps.InfoWindow;
 
+
   // Try HTML5 geolocation.
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
@@ -38,6 +39,11 @@ function initMap() {
       infoWindow.setContent('Location found.');
       infoWindow.open(map);
       map.setCenter(pos);
+
+      var markerHome = new google.maps.Marker({
+        position: pos,
+        map: map,
+      });
     }, function() {
       handleLocationError(true, infoWindow, map.getCenter());
     });
@@ -45,7 +51,13 @@ function initMap() {
     // Browser doesn't support Geolocation
     handleLocationError(false, infoWindow, map.getCenter());
   }
+
+
 }
+
+
+
+
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
   infoWindow.setPosition(pos);
@@ -53,6 +65,10 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
                         'Error: The Geolocation service failed.' :
                         'Error: Your browser doesn\'t support geolocation.');
   infoWindow.open(map);
+
+
+
+
 }
 
 // Call the eventful API
@@ -67,7 +83,7 @@ function getEvent() {
 var searchTerm = $("#search-term").val().trim();
 var category = $("#category").val().trim();
 var date = "future";
-var radius = 10;
+var radius = $("#diameter").val().trim();
 var eventfulKey = "app_key=d4dVMRcZjgzdC4mP";
 var eventfulURL = "https://api.eventful.com/json/events/search?" + eventfulKey + "&location=" + lat + "," + long + "&within=" + radius + "&c=" + category + "&q=" + searchTerm + "&t=" + date;
 return axios.get(eventfulURL)
@@ -92,6 +108,17 @@ return axios.get(eventfulURL)
         eventTitle: singleEvent.title,
 
       }
+      var myLatLng = {lat: lat, lng: long};
+
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 10,
+        center: myLatLng
+      });
+    
+      var marker = new google.maps.Marker({
+        position: myLatLng,
+        map: map,
+      });
     
     eventArray.push(event) 
      })
