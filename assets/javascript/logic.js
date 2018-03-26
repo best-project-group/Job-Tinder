@@ -8,8 +8,8 @@ var config = {
   };
   firebase.initializeApp(config);
 
+var database = firebase.database();
 var googleKey = "key=AIzaSyCysKLNkJpvd4jHgJeSjfKlKfUSS5TvMXg"
-
 var map, infoWindow, lat, long;
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
@@ -50,18 +50,17 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
   infoWindow.open(map);
 }
 
-function testEvent(lat, long) {
-}
-
 // Call the eventful API
+
+function getEvent(lat, long) {
 
 var radius = 10
 var eventfulKey = "app_key=d4dVMRcZjgzdC4mP";
 var eventfulURL = "https://api.eventful.com/json/events/search?" + eventfulKey + "&location=" + lat + "," + long + "&within=" + radius
 
-function getEvent(lat, long) {
-return axios.get("https://api.eventful.com/json/events/search?" + eventfulKey + "&location=" + lat + "," + long + "&within=" + radius)
-  .then(function(axiosResponse) {
+// return axios.get("https://api.eventful.com/json/events/search?" + eventfulKey + "&location=" + lat + "," + long + "&within=" + radius)
+return axios.get(eventfulURL)
+.then(function(axiosResponse) {
     var eventArray = []
      axiosResponse.data.events.event.forEach(function(singleEvent) { 
       var event= {
@@ -71,16 +70,22 @@ return axios.get("https://api.eventful.com/json/events/search?" + eventfulKey + 
         eventURL: singleEvent.url,
         eventCity: singleEvent.city_name,
         eventDescripition: singleEvent.descripition,
-        // startTime: singleEvent.start_time,
+        startTime: singleEvent.start_time,
         stopTime: singleEvent.stop_time,
-        eventTitle: singleEvent.title,
+        eventTitle: singleEvent.title
       }
-    eventArray.push(event) 
-     })
-     console.log(eventArray)
-  return(eventArray)
+      // database.ref().push(event)    
+      console.log(event)
+      eventArray.push(event)
+         })
+    //  console.log(axiosResponse)
+    //  console.log(eventArray)
+     return(eventArray)
   })
 }
+
+
+
 
 /* REMOVES ANY EXISTING CARD AND CREATES BLANK HTML TEMPLATE */ 
 function createCard() {
