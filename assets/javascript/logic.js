@@ -53,6 +53,15 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 // Call the eventful API
 var eventfulKey = "app_key=d4dVMRcZjgzdC4mP";
 
+//Need to connect the rest of the forms to the eventful API
+//So far I have zip code and radius completed, need to link in the category, date, and search term
+
+//Start code for Category form link
+// do I need to insert an id for each category? My thought was to search the event.Description for concerts/conference/comedy? Thoughts?
+
+
+//Zip code search is working but still running eventful API on document.ready
+
 function getEventByZip() {
   var zipCode = $("#zip-code").val();
   console.log(zipCode);
@@ -76,7 +85,7 @@ function getEventByZip() {
         }
         eventArray.push(event)
       })
-      console.log(eventArray)
+      console.log(eventArray);
       return (eventArray)
     })
 };
