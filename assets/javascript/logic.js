@@ -11,10 +11,13 @@ firebase.initializeApp(config);
 var googleKey = "key=AIzaSyCysKLNkJpvd4jHgJeSjfKlKfUSS5TvMXg"
 
 var map, infoWindow, lat, long;
+
 function initMap() {
-  
   map = new google.maps.Map(document.getElementById('map'), {
-    center: { lat: -34.397, lng: 150.644 },
+    center: {
+      lat: -34.397,
+      lng: 150.644
+    },
     zoom: 6
   });
   infoWindow = new google.maps.InfoWindow;
@@ -33,7 +36,6 @@ function initMap() {
       infoWindow.setContent('Location found.');
       infoWindow.open(map);
       map.setCenter(pos);
-      getEventLatLong(pos.lat, pos.lng);
     }, function () {
       handleLocationError(true, infoWindow, map.getCenter());
     });
@@ -50,18 +52,6 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     'Error: Your browser doesn\'t support geolocation.');
   infoWindow.open(map);
 }
-
-// Call the eventful API
-var eventfulKey = "app_key=d4dVMRcZjgzdC4mP";
-
-//Need to connect the rest of the forms to the eventful API
-//So far I have zip code and radius completed, need to link in the category, date, and search term
-
-//Start code for Category form link
-// do I need to insert an id for each category? My thought was to search the event.Description for concerts/conference/comedy? Thoughts?
-
-
-//Zip code search is working but still running eventful API on document.ready
 
 function getEventByZip() {
   var zipCode = $("#zip-code").val();
@@ -91,18 +81,54 @@ function getEventByZip() {
     })
 };
 
-var radius = $("#radius option:selected").val();
-console.log(radius);
 
-function getEventLatLong(lat, long) {
+function dateCheck(inputDate1, inputDate2) {
+  var today = moment().format("YYYYMMDD");
+  // var inputDate1 = $('#date1').val();
+  // var inputDate2 = $('#date2').val();
+  // console.log("today: " + today);
+  console.log("first date:  " + inputDate1);
+  console.log("second date:  " + inputDate2);
+  console.log(today);
 
+  var dateMessg = $("<p>");
+  if ((inputDate1.value == " ") || (inputDate2.value == "")) {
+    dateMessg.text("Please select a valid date");
+    $("#date").append(dateMessg);
+  } else if ((inputDate1 < today) || (inputDate2 < today)) {
+    dateMessg.text("Please start with today's date or a future date");
+    $("#date").append(dateMessg);
+  }
+}
 
+// Call the eventful API
+
+// var radius = 10
+var eventfulKey = "app_key=d4dVMRcZjgzdC4mP";
+var eventfulURL = "https://api.eventful.com/json/events/search?" + eventfulKey + "&location=" + lat + "," + long + "&within=" + radius
+
+// getEvent().then(function(foundEvent) {
+
+// JQuery to go here!! 
+
+// })
+var radius, zipCode, searchTerm, firstDate, secondDate;
+
+function getEvent(lat, long) {
+  radius = $("#rad").val().trim();
+  zipCode = $("#zip-code").val().trim();
+  searchTerm = $("#search-term").val().trim();
+  firstDate = moment($("#date1").val().trim()).format("YYYYMMDD");
+  secondDate = moment($("#date2").val().trim()).format("YYYYMMDD");
+  if (zipCode.length === 5)
+    var latLong = zipCode
+  else var latLong = lat + "," + long
+  dateCheck(firstDate, secondDate);
   var URL = "https://api.eventful.com/json/events/search?" + eventfulKey + "&within=" + radius + "&location=" + latLong + "&keywords=" + searchTerm + "&date=" + firstDate + "00-" + secondDate + "00"
-
-  return axios.get(eventfulURL)
+  return axios.get(URL)
     .then(function (axiosResponse) {
+      console.log(URL)
       var eventArray = []
-      console.log(axiosResponse);
       axiosResponse.data.events.event.forEach(function (singleEvent) {
         var event = {
           venueAddress: singleEvent.venue_address,
@@ -138,7 +164,6 @@ function createCard() {
     "</div>"
   )
 
-
 }
 
 /* RETRIEVES REQUESTED EVENT INFO AND FILLS THE BLANK CARD*/
@@ -157,6 +182,14 @@ function createCard() {
 /* SEARCHES THE API USING EVENTOBJECT */
 // EVDB.API.call("/events/search", eventObject, function(objectData) {
 
+/* SIMPLIFIES LATER ENTRIES */
+// event = objectData.events.event;
+
+/* LOOPS THROUGH THE RETRIEVED EVENT LIST */
+
+// console.log(event[i]);
+
+/* FORMATS THE UGLY DATE GIVEN BY THE API AND APPENDS TO THE CARD */
 //       function pullDate() {
 
 //           startTime = moment(new Date(event[i].start_time));
@@ -178,45 +211,30 @@ function createCard() {
 //   });
 // }
 
-
 $(document).ready(function () {
+  searchId = "";
 
-});
+  i = 0;
+  $("#submit-btn").on("click", function () {
+    event.preventDefault();
+    $('html, body').animate({
+      scrollTop: $("#top-of-form").offset().top
+    }, 5000);
+    event.preventDefault();
+    getEvent(lat, long)
+    createCard();
+    // pullEvent();
 
-searchId = "";
+    /* IF THE SEARCH TERM IS NEW, START CYCLE AT 0, ELSE ITERATE */
+    if ($("#search-term").val() === searchId) {
+      i++;
+    } else {
+      i = 0;
+    }
 
-i = 0;
-$("#submit-btn").on("click", function (event) {
-  event.preventDefault();
-  $('html, body').animate({
-    scrollTop: $("#top-of-form").offset().top
-  }, 5000);
-  event.preventDefault();
-  createCard();
-  getEventByZip();
+    var zipCode = $("#zip-code").val().trim();
+    console.log("zip code: " + zipCode);
 
-  /* IF THE SEARCH TERM IS NEW, START CYCLE AT 0, ELSE ITERATE */
-  if ($("#search-term").val() === searchId) {
-    i++;
-  }
-  else {
-    i = 0;
-  }
 
-  var zipCode = $("#zip-code").val().trim();
-  console.log("zip code: " + zipCode);
-
-  var today = new Date();
-  var inputDate1 = new Date($('#date1').val());
-  var inputDate2 = new Date($('#date2').val());
-  console.log("first date:  " + inputDate1);
-  var dateMessg = $("<p>");
-  if ((inputDate1.value == " ") || (inputDate2.value == "")) {
-    dateMessg.text("Please select a valid date");
-    $("#date").append(dateMessg);
-  }
-  else if ((inputDate1 < today) || (inputDate2 < today)) {
-    dateMessg.text("Please start with today's date or a future date");
-    $("#date").append(dateMessg);
-  }
+  });
 });
