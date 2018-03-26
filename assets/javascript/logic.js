@@ -12,6 +12,7 @@ var googleKey = "key=AIzaSyCysKLNkJpvd4jHgJeSjfKlKfUSS5TvMXg"
 
 var map, infoWindow, lat, long;
 function initMap() {
+  
   map = new google.maps.Map(document.getElementById('map'), {
     center: { lat: -34.397, lng: 150.644 },
     zoom: 6
@@ -129,6 +130,7 @@ function createCard() {
   )
 
 
+
 }
 
 /* RETRIEVES REQUESTED EVENT INFO AND FILLS THE BLANK CARD*/
@@ -147,14 +149,7 @@ function createCard() {
 /* SEARCHES THE API USING EVENTOBJECT */
 // EVDB.API.call("/events/search", eventObject, function(objectData) {
 
-/* SIMPLIFIES LATER ENTRIES */
-// event = objectData.events.event;
 
-/* LOOPS THROUGH THE RETRIEVED EVENT LIST */
-
-// console.log(event[i]);
-
-/* FORMATS THE UGLY DATE GIVEN BY THE API AND APPENDS TO THE CARD */
 //       function pullDate() {
 
 //           startTime = moment(new Date(event[i].start_time));
@@ -218,3 +213,4 @@ $("#submit-btn").on("click", function (event) {
     $("#date").append(dateMessg);
   }
 });
+
