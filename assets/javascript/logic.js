@@ -175,7 +175,6 @@ $("#card-div").html(
 
 
 $(document).ready(function() {
-
 searchId = "";
 
 i = 0;
