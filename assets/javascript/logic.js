@@ -49,19 +49,18 @@ function initMap() {
   }
 
 
-}
 
 
 
 
+  function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    infoWindow.setPosition(pos);
+    infoWindow.setContent(browserHasGeolocation ?
+      'Error: The Geolocation service failed.' :
+      'Error: Your browser doesn\'t support geolocation.');
+    infoWindow.open(map);
 
-function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-  infoWindow.setPosition(pos);
-  infoWindow.setContent(browserHasGeolocation ?
-    'Error: The Geolocation service failed.' :
-    'Error: Your browser doesn\'t support geolocation.');
-  infoWindow.open(map);
-
+  }
 
   function testEvent(lat, long) { }
 
@@ -92,17 +91,21 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 
   function getEvent(lat, long) {
     var eventfulKey = "app_key=d4dVMRcZjgzdC4mP";
+
     radius = $("#rad").val().trim();
     zipCode = $("#zip-code").val().trim();
     searchTerm = $("#search-term").val().trim();
+
     var category = $("#category").val().trim();
+
     firstDate = moment($("#date1").val().trim()).format("YYYYMMDD");
     secondDate = moment($("#date2").val().trim()).format("YYYYMMDD");
+
     if (zipCode.length === 5)
       var latLong = zipCode
-    else var latLong = lat + "," + long
+    else { var latLong = lat + "," + long }
     dateCheck(firstDate, secondDate);
-    var URL = "https://api.eventful.com/json/events/search?" + eventfulKey + "&within=" + radius + "&location=" + latLong + "&q=" + searchTerm + "&c=" + category + "&date=" + firstDate + "00-" + secondDate + "00"
+    var URL = "https://api.eventful.com/json/events/search?" + eventfulKey + "&within=" + radius + "&l=" + latLong + "&q=" + searchTerm + "&c=" + category + "&date=" + firstDate + "00-" + secondDate + "00"
     return axios.get(URL)
       .then(function (axiosResponse) {
         console.log(URL)
@@ -132,7 +135,7 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 
         function pullDate() {
 
-          startTime = moment(new Date(eventArray[0].startTime));
+          startTime = moment(new Date(eventArray[i].startTime));
           timeToDoors = moment().to(startTime)
           formattedStart = moment(startTime).format("LLLL");
 
@@ -166,36 +169,39 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
   var i = 0;
 
   var searchID = "";
+
   var categoryID = "";
 
-  $("#submit-btn").on("click", function (event) {
-    event.preventDefault();
 
-    $('html, body').animate({
-      scrollTop: $("#top-of-form").offset().top
-    }, 5000);
+  $(document).ready(function () {
+    $("#submit-btn").on("click", function (event) {
+      event.preventDefault();
 
-
-    /* IF THE SEARCH TERM IS NEW, START CYCLE AT 0, ELSE ITERATE */
-    if ($("#search-term").val().trim() === searchID && $("#category").val().trim() === categoryID) {
-      i++;
-    }
-    else {
-      i = 0;
-    }
+      $('html, body').animate({
+        scrollTop: $("#top-of-form").offset().top
+      }, 5000);
 
 
-    createCard();
-    getEvent(lat, long);
+      /* IF THE SEARCH TERM IS NEW, START CYCLE AT 0, ELSE ITERATE */
+      if ($("#search-term").val().trim() === searchID && $("#category").val().trim() === categoryID) {
+        i++;
+      }
+      else {
+        i = 0;
+      }
 
 
-    var zipCode = $("#zip-code").val().trim();
-    console.log("zip code: " + zipCode);
+      createCard();
+      getEvent(lat, long);
 
+
+      var zipCode = $("#zip-code").val().trim();
+      console.log("zip code: " + zipCode);
+
+
+    });
 
   });
-
-
 
 
 }
