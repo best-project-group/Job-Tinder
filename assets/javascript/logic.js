@@ -1,5 +1,6 @@
 // GOOGLE MAPS API KEY: AIzaSyCysKLNkJpvd4jHgJeSjfKlKfUSS5TvMXg
 
+
 var config = {
   apiKey: "AIzaSyBsTvIy8q6B5Jc6Dc_fbGY9PYX_vRtz4a0",
   authDomain: "job-tinder-167a5.firebaseapp.com",
@@ -47,11 +48,6 @@ function initMap() {
     // Browser doesn't support Geolocation
     handleLocationError(false, infoWindow, map.getCenter());
   }
-
-
-
-
-
 
   function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     infoWindow.setPosition(pos);
@@ -110,6 +106,7 @@ function initMap() {
       .then(function (axiosResponse) {
         console.log(URL)
         var eventArray = []
+        console.log(axiosResponse);
         axiosResponse.data.events.event.forEach(function (singleEvent) {
           var event = {
             venueAddress: singleEvent.venue_address,
@@ -144,7 +141,12 @@ function initMap() {
         }
         pullDate();
         return (eventArray)
+
+      }).catch(error => {
+      console.log(error);
+      $("#search-error").html("Please be more specific. There was a problem with your search. Please don't use abbreviations or acronyms.");
       })
+    
 
   }
 
@@ -176,10 +178,11 @@ function initMap() {
   $(document).ready(function () {
     $("#submit-btn").on("click", function (event) {
       event.preventDefault();
+      $("#search-error").html("")
 
       $('html, body').animate({
         scrollTop: $("#top-of-form").offset().top
-      }, 5000);
+      }, 500);
 
 
       /* IF THE SEARCH TERM IS NEW, START CYCLE AT 0, ELSE ITERATE */
@@ -200,8 +203,5 @@ function initMap() {
 
 
     });
-
   });
-
-
 }
