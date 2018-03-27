@@ -49,36 +49,16 @@ function initMap() {
 
 
 
-function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-  infoWindow.setPosition(pos);
-  infoWindow.setContent(browserHasGeolocation ?
-    'Error: The Geolocation service failed.' :
-    'Error: Your browser doesn\'t support geolocation.');
-  infoWindow.open(map);
+  function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    infoWindow.setPosition(pos);
+    infoWindow.setContent(browserHasGeolocation ?
+      'Error: The Geolocation service failed.' :
+      'Error: Your browser doesn\'t support geolocation.');
+    infoWindow.open(map);
 
-}
-
-function testEvent(lat, long) {}
-
-function dateCheck(inputDate1, inputDate2) {
-  var today = moment().format("YYYYMMDD");
-  // var inputDate1 = $('#date1').val();
-  // var inputDate2 = $('#date2').val();
-  // console.log("today: " + today);
-  console.log("first date:  " + inputDate1);
-  console.log("second date:  " + inputDate2);
-  console.log(today);
-
-  var dateMessg = $("<p>");
-  if ((inputDate1.value == " ") || (inputDate2.value == "")) {
-    dateMessg.text("Please select a valid date");
-    $("#date").append(dateMessg);
-  } else if ((inputDate1 < today) || (inputDate2 < today)) {
-    dateMessg.text("Please start with today's date or a future date");
-    $("#date").append(dateMessg);
   }
 
-  function testEvent(lat, long) {}
+  function testEvent(lat, long) { }
 
   function dateCheck(inputDate1, inputDate2) {
     var today = moment().format("YYYYMMDD");
@@ -101,46 +81,55 @@ function dateCheck(inputDate1, inputDate2) {
 
   // Call the eventful API
 
-  var eventfulKey = "app_key=d4dVMRcZjgzdC4mP";
-  radius = $("#rad").val().trim();
-  zipCode = $("#zip-code").val().trim();
-  searchTerm = $("#search-term").val().trim();
-  var category = $("#category").val().trim();
-  firstDate = moment($("#date1").val().trim()).format("YYYYMMDD");
-  secondDate = moment($("#date2").val().trim()).format("YYYYMMDD");
-  if (zipCode.length === 5)
-    var latLong = zipCode
-  else { var latLong = lat + "," + long }
-  dateCheck(firstDate, secondDate);
-  var URL = "https://api.eventful.com/json/events/search?" + eventfulKey + "&within=" + radius + "&l=" + latLong + "&q=" + searchTerm + "&c=" + category + "&date=" + firstDate + "00-" + secondDate + "00"
-  return axios.get(URL)
-    .then(function (axiosResponse) {
-      console.log(URL)
-      var eventArray = []
-      axiosResponse.data.events.event.forEach(function (singleEvent) {
-        var event = {
-          venueAddress: singleEvent.venue_address,
-          venueName: singleEvent.venue_name,
-          venueURL: singleEvent.venue_url,
-          eventURL: singleEvent.url,
-          eventCity: singleEvent.city_name,
-          eventDescripition: singleEvent.descripition,
-          startTime: singleEvent.start_time,
-          stopTime: singleEvent.stop_time,
-          eventTitle: singleEvent.title,
-        }
-        eventArray.push(event)
-      })
-    
-     searchID = $("#search-term").val().trim();
-     categoryID = $("#category").val().trim();
-     $("#event").append(eventArray[i].eventTitle);
-     $("#venue").append(eventArray[i].venueName);
-     $("#description").append(eventArray[i].eventDescripition);
-     $("#external-link").attr("href", eventArray[i].eventURL);
 
 
-      function pullDate() {
+  var radius, zipCode, searchTerm, firstDate, secondDate;
+
+  function getEvent(lat, long) {
+    var eventfulKey = "app_key=d4dVMRcZjgzdC4mP";
+
+    radius = $("#rad").val().trim();
+    zipCode = $("#zip-code").val().trim();
+    searchTerm = $("#search-term").val().trim();
+
+    var category = $("#category").val().trim();
+
+    firstDate = moment($("#date1").val().trim()).format("YYYYMMDD");
+    secondDate = moment($("#date2").val().trim()).format("YYYYMMDD");
+
+    if (zipCode.length === 5)
+      var latLong = zipCode
+    else { var latLong = lat + "," + long }
+    dateCheck(firstDate, secondDate);
+    var URL = "https://api.eventful.com/json/events/search?" + eventfulKey + "&within=" + radius + "&l=" + latLong + "&q=" + searchTerm + "&c=" + category + "&date=" + firstDate + "00-" + secondDate + "00"
+    return axios.get(URL)
+      .then(function (axiosResponse) {
+        console.log(URL)
+        var eventArray = []
+        axiosResponse.data.events.event.forEach(function (singleEvent) {
+          var event = {
+            venueAddress: singleEvent.venue_address,
+            venueName: singleEvent.venue_name,
+            venueURL: singleEvent.venue_url,
+            eventURL: singleEvent.url,
+            eventCity: singleEvent.city_name,
+            eventDescripition: singleEvent.descripition,
+            startTime: singleEvent.start_time,
+            stopTime: singleEvent.stop_time,
+            eventTitle: singleEvent.title,
+          }
+          eventArray.push(event)
+        })
+
+        searchID = $("#search-term").val().trim();
+        categoryID = $("#category").val().trim();
+        $("#event").append(eventArray[i].eventTitle);
+        $("#venue").append(eventArray[i].venueName);
+        $("#description").append(eventArray[i].eventDescripition);
+        $("#external-link").attr("href", eventArray[i].eventURL);
+
+
+        function pullDate() {
 
           startTime = moment(new Date(eventArray[i].startTime));
           timeToDoors = moment().to(startTime)
@@ -175,38 +164,40 @@ function dateCheck(inputDate1, inputDate2) {
 
   var i = 0;
 
-var searchID = "";
+  var searchID = "";
 
-var categoryID = "";
-
-
-$(document).ready( function() {
-$("#submit-btn").on("click", function(event) {
-  event.preventDefault();
-
-    $('html, body').animate({
-      scrollTop: $("#top-of-form").offset().top
-    }, 5000);
+  var categoryID = "";
 
 
-    /* IF THE SEARCH TERM IS NEW, START CYCLE AT 0, ELSE ITERATE */
-    if ($("#search-term").val().trim() === searchID && $("#category").val().trim() === categoryID) {
-      i++;
-    } else {
-      i = 0;
-    }
+  $(document).ready(function () {
+    $("#submit-btn").on("click", function (event) {
+      event.preventDefault();
+
+      $('html, body').animate({
+        scrollTop: $("#top-of-form").offset().top
+      }, 5000);
 
 
-    createCard();
-    getEvent(lat, long);
+      /* IF THE SEARCH TERM IS NEW, START CYCLE AT 0, ELSE ITERATE */
+      if ($("#search-term").val().trim() === searchID && $("#category").val().trim() === categoryID) {
+        i++;
+      }
+      else {
+        i = 0;
+      }
 
 
-    var zipCode = $("#zip-code").val().trim();
-    console.log("zip code: " + zipCode);
+      createCard();
+      getEvent(lat, long);
 
 
-});
+      var zipCode = $("#zip-code").val().trim();
+      console.log("zip code: " + zipCode);
 
 
-})
+    });
+
+  });
+
+
 }
