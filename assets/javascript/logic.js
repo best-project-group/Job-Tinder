@@ -49,8 +49,6 @@ function initMap() {
   }
 
 
-}
-
 
 
 
@@ -62,6 +60,7 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     'Error: Your browser doesn\'t support geolocation.');
   infoWindow.open(map);
 
+}
 
 function testEvent(lat, long) {}
 
@@ -100,9 +99,9 @@ function getEvent(lat, long) {
   secondDate = moment($("#date2").val().trim()).format("YYYYMMDD");
   if (zipCode.length === 5)
     var latLong = zipCode
-  else var latLong = lat + "," + long
+  else { var latLong = lat + "," + long }
   dateCheck(firstDate, secondDate);
-  var URL = "https://api.eventful.com/json/events/search?" + eventfulKey + "&within=" + radius + "&location=" + latLong + "&q=" + searchTerm + "&c=" + category + "&date=" + firstDate + "00-" + secondDate + "00"
+  var URL = "https://api.eventful.com/json/events/search?" + eventfulKey + "&within=" + radius + "&l=" + latLong + "&q=" + searchTerm + "&c=" + category + "&date=" + firstDate + "00-" + secondDate + "00"
   return axios.get(URL)
     .then(function (axiosResponse) {
       console.log(URL)
@@ -132,7 +131,7 @@ function getEvent(lat, long) {
 
       function pullDate() {
 
-          startTime = moment(new Date(eventArray[0].startTime));
+          startTime = moment(new Date(eventArray[i].startTime));
           timeToDoors = moment().to(startTime)
           formattedStart = moment(startTime).format("LLLL");
 
@@ -166,8 +165,11 @@ function createCard() {
 var i = 0;
 
 var searchID = "";
+
 var categoryID = "";
 
+
+$(document).ready( function() {
 $("#submit-btn").on("click", function(event) {
   event.preventDefault();
 
@@ -195,7 +197,7 @@ $("#submit-btn").on("click", function(event) {
 
 });
 
-
+});
 
 
 }
