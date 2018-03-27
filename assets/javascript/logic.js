@@ -101,7 +101,7 @@ function initMap() {
       var latLong = zipCode
     else { var latLong = lat + "," + long }
     dateCheck(firstDate, secondDate);
-    var URL = "https://api.eventful.com/json/events/search?" + eventfulKey + "&within=" + radius + "&l=" + latLong + "&q=" + searchTerm + "&c=" + category + "&date=" + firstDate + "00-" + secondDate + "00"
+    var URL = "https://api.eventful.com/json/events/search?" + eventfulKey + "&within=" + radius + "&l=" + latLong + "&q=" + searchTerm + "&c=" + category + "&date=" + firstDate + "00-" + secondDate + "00" + "&scheme=https"
     return axios.get(URL)
       .then(function (axiosResponse) {
         console.log(URL)
