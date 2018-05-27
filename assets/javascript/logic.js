@@ -11,7 +11,7 @@ var config = {
 };
 firebase.initializeApp(config);
 
-var googleKey = "key=AIzaSyCysKLNkJpvd4jHgJeSjfKlKfUSS5TvMXg"
+var googleKey = "key=AIzaSyCysKLNkJpvd4jHgJeSjfKlKfUSS5TvMXg";
 
 var map, infoWindow, lat, long;
 
@@ -86,7 +86,7 @@ function initMap() {
   var radius, zipCode, searchTerm, firstDate, secondDate;
 
   function getEvent(lat, long) {
-    var eventfulKey = "app_key=d4dVMRcZjgzdC4mP";
+    var eventfulKey = "app_key=wHSxjhRvKVd5sTPH";
 
     radius = $("#rad").val().trim();
     zipCode = $("#zip-code").val().trim();
@@ -102,6 +102,7 @@ function initMap() {
     else { var latLong = lat + "," + long }
     dateCheck(firstDate, secondDate);
     var URL = "https://api.eventful.com/json/events/search?" + eventfulKey + "&within=" + radius + "&l=" + latLong + "&q=" + searchTerm + "&c=" + category + "&date=" + firstDate + "00-" + secondDate + "00" + "&scheme=https"
+    
     return axios.get(URL)
       .then(function (axiosResponse) {
         console.log(URL)
